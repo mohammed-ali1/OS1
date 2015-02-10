@@ -50,7 +50,7 @@ module TSOS {
                 _GLaDOS = new Glados();
                 _GLaDOS.init();
             }
-        }
+        }  
 
         public static hostLog(msg: string, source: string = "?"): void {
 
