@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="author"             content="Alan G. Labouseur" />
+    <link rel="stylesheet" href="dist/styles/tsos.css" type="text/css" media="screen" />
+    <title>BAD ASS OS -- 9.1.5</title>
+
+    <!-- Globals CONSTANTS and _Variables. Must included be first. -->
+    <script type="text/javascript" src="dist/scripts/globals.js"></script>
+
+    <!-- Host (Hardware Simulation) Routines -->
+    <script type="text/javascript" src="dist/scripts/host/control.js"></script>
+    <script type="text/javascript" src="dist/scripts/host/devices.js"></script>
+    <script type="text/javascript" src="dist/scripts/host/cpu.js"></script>
+    <script type="text/javascript" src="dist/scripts/host/Memory.js"></script>
+
+    <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+    <script type="text/javascript" src="dist/scripts/os/interrupt.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/canvastext.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/console.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/deviceDriver.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/deviceDriverKeyboard.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/queue.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/shell.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/shellCommand.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/userCommand.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/Pcb.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/Activity.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/MemoryManager.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/Scheduler.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/deviceDriverFileSystem.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/File.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/FileSystemUtilities.js"></script>
+    <script type="text/javascript" src="dist/scripts/os/kernel.js"></script>
+
+    <!-- Other Routines -->
+    <script type="text/javascript" src="dist/scripts/utils.js"></script>
+    <!-- Uncomment this line below to enable Glados testing -->
+    <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
+<div id="top">
+
+    <p>
+        Status:
+    </p>
+    <p id="status">
+        off
+    </p>
+
+    <p id="clock">
+        <script>
+            setInterval(function(){
+                document.getElementById("clock").innerHTML = "[" + new Date().toLocaleDateString() +
+                        "] [" +    new Date().toLocaleTimeString() + "]";
+            },100);
+        </script>
+    </p>
+</div>
+</head>
+
+<body onload="onDocumentLoad();">
+
+<div id="divMain">
+
+    <div id="divButtonBar">
+        <input type="button"
+               id = "btnStartOS"
+               name="brnStartOS"
+               class="normal_button"
+               value="Start"
+               tabindex="0"
+               onclick="TSOS.Control.hostBtnStartOS_click(this);">
+
+        <input type="button"
+               id = "btnHaltOS"
+               name="brnHaltOS"
+               class="normal_button"
+               disabled="disabled"
+               value="Halt"
+               tabindex="1"
+               onclick="TSOS.Control.hostBtnHaltOS_click(this);">
+
+        <input type="button"
+               id = "btnReset"
+               name="brnReset"
+               class="normal_button"
+               disabled="disabled"
+               value="Reset"
+               tabindex="2"
+               onclick="TSOS.Control.hostBtnReset_click(this);">
+
+            <input id="stepButton" type="button" value="Single Step"
+                   onclick="TSOS.Control.hostStepButton_click(this);"
+                    style="float: right;"/>
+            <input id="stopButton" type="button" value="Stop"
+               onclick="TSOS.Control.hostStopButton_click(this);"
+               style="visibility: hidden; float: right;"/>
+            <input id="nextButton" type="button" value="Next"
+                   onclick="TSOS.Control.hostNextButton_click(this);"
+                   style="float:right; visibility: hidden; float: right;"/>
+
+    </div>
+
+    <div id="divConsole" style="margin:4px; float:left;">
+        <canvas id="display"
+                width="500"
+                height="500"
+                tabindex="3">
+        </canvas>
+    </div>
+
+    <div id="divLog" style="margin-left:2px; float: left; width: auto; height: auto;">
+        <div>
+            <center><h3 style="color: firebrick; margin-top:3%;">Host Logger</h3></center>
+            <textarea name="taHostLog"
+                      id  ="taHostLog"
+                      rows="26"
+                      cols="20"
+                    style="border: 2px solid;"></textarea>
+        </div>
+
+        <div>
+            <h3 style="color: firebrick; text-align: left;">User Program</h3>
+            <textarea name="taProgramInput"
+                      id  ="taProgramInput"
+                      rows="8"
+                      cols="40"
+                      placeholder="Enter Program to RUN">A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00</textarea>
+        </div>
+    </div>
+
+    <div id="memoryTable" style="margin-left:5px; height: auto;float:left;">
+
+        <div>
+            <p>
+                <center>
+                     <h3 style="">Main Memory</h3>
+                </center>
+            </p>
+        </div>
+
+        <div id="tableID">
+            <table id="table"></table>
+        </div>
+
+        <div id="tableMemory">
+            <div>
+
+                <h4 id="instruction" style="color: firebrick; clear: both;">CPU [ ]</h4>
+
+                <table id="cpu">
+                    <tr>
+                        <th>PC</th>
+                        <th>IR</th>
+                        <th>ACC</th>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>Z</th>
+                    </tr>
+
+                    <tr>
+                        <td id="pc">0</td>
+                        <td id="ir">00</td>
+                        <td id="acc">0</td>
+                        <td id="x">0</td>
+                        <td id="y">0</td>
+                        <td id="z">0</td>
+                    </tr>
+                </table>
+
+                <div style="height: 130px; overflow: scroll; border:transparent; border-radius: 5px;">
+                    <h4 style="color: firebrick;">Processes Monitoring</h4>
+                    <table id="monitor">
+                        <tr>
+                            <th>PID</th>
+                            <th>Arrived</th>
+                             <th>Terminated</th>
+                            <th>Turnaround</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div id="processesDiv">
+        <h4 id="currentScheduler" style="color:firebrick;" ></h4>
+        <h4 style="color:firebrick; display: inline;">Active Processes</h4>
+
+        <div>
+            <table id="displayReady">
+                <tr>
+                    <th>Pid</th>
+                    <th>Base</th>
+                    <th>Limit</th>
+                    <th>State</th>
+                    <th>PC</th>
+                    <th>IR</th>
+                    <th>Acc</th>
+                    <th>XReg</th>
+                    <th>YReg</th>
+                    <th>ZFlag</th>
+                    <th>Location</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="fileSystemDiv">
+        <center><h4 style="color: firebrick;">File System</h4></center>
+        <div id="dirDataDiv" style=" max-width: 550px; max-height: 500px; overflow: scroll;">
+            <table id="dirDataTable">
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<footer class="footerText" style="clear:both;">
+    <br>
+    Copyright &copy; 2008 - 2014 No Rights Reserved.
+    <br>
+    Reproduction is prohibited without the express written consent of
+    Ted Codd, Stevie Ray Vaughan, and Ian Fleming.
+</footer>
+</html>

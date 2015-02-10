@@ -1,0 +1,338 @@
+/* TSOS.css */
+
+/* Heading */
+#top{
+    width: 100%;
+    float: left;
+    border: 1px solid;
+    display: inline-block;
+}
+#top p{
+    font-size:25px;
+    color:red;
+    margin-left: 1%;
+    float: left;
+}
+
+/* Body */
+body {
+    /*background-color: rgba(122, 122, 122, 0.40);*/
+    background-color: lightgrey;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: normal;
+    font-style: normal;
+}
+
+#divMain{
+    width:100%;
+    float: left;
+    white-space: nowrap;
+    border: 1px solid #ffffff;
+}
+
+h1{
+    color: black;
+    font-size: 24pt;
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+    font-size: 20pt;
+    font-weight: normal;
+    font-style: normal;
+    color: firebrick;
+}
+
+h3 {
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    font-size: 16pt;
+    font-weight: normal;
+    font-style: normal;
+    color: firebrick;
+    text-align: center;
+}
+/* Buttons */
+#divButtonBar{
+    padding-top: 1%;
+    border: 1px solid wheat;
+    margin:4px;
+    width: auto;
+}
+
+#btnStartOS{
+    background-color: lawngreen;
+    font-size: 20px;
+    border-radius: 10px;
+    width: 150px;
+}
+
+#btnHaltOS{
+    background-color: orange;
+    font-size: 20px;
+    border-radius: 10px;
+    width: 150px;
+    color:#000000;
+}
+
+#btnReset{
+    background-color: red;
+    font-size: 20px;
+    border-radius: 10px;
+    width: 150px;
+    color:#ffffff;
+}
+
+#stepButton, #stopButton, #nextButton{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    float: left;
+    font-size: 15px;
+    background-color: floralwhite;
+}
+
+#nextButton{
+    background-color: lawngreen;
+    color: #000000;
+}
+
+#stopButton{
+    background-color: red;
+    color: #ffffff;
+}
+
+#display {
+    /*background-color: rgba(246, 232, 151, 0.30);*/
+    background-color: lightgrey;
+    border: 2px solid red;
+    cursor: default;
+    border-radius: 5px;
+}
+
+.normal_button {
+    width: 100px;
+}
+
+.footerText {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    text-align: center;
+}
+
+#taProgramInput{
+    color:#E66C2C;
+    resize: none;
+    border-radius: 5px;
+    width: 350px;
+    height: 70px;
+    border: 2px solid red;
+    font-size: 14px;
+    background-color: transparent;
+}
+
+#taHostLog{
+    color:#E66C2C;
+    resize:none;
+    width:350px;
+    height:200px;
+    overflow: scroll;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: bold;
+    font-style: normal;
+    border-radius: 5px;
+    border: 2px solid red;
+    background-color: transparent;
+}
+
+#tableID{
+    max-width:370px;
+    resize: none;
+    float: left;
+    height:290px;
+    overflow: scroll;
+    background-color: transparent;
+    font-size:9px;
+    font-weight: normal;
+    /*margin-right: 1%;*/
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 2px solid red;
+    visibility: hidden;
+}
+
+#table{
+    font-weight: bold;
+    font-size: 10px;
+}
+
+#memoryContents{
+    border: 1px solid #000000;
+    color: #fa9353;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+#tableID tr:nth-child(odd) {
+    background-color: rgb(255, 196, 45);
+    /*FFD801*/
+}
+#tableID tr:nth-child(even) {
+    background-color:#E66C2C;
+    /*E66C2C*/
+}
+
+#tableID td:hover{
+    background-color:red;
+}
+
+#tableID td{
+    padding: 10px;
+    font-size: 12px;
+    resize: none;
+}
+
+/*CPU CSS */
+#cpu{
+    border: 2px solid red;
+    width:350px;
+    border-radius: 5px;
+    table-layout: auto;
+    margin-top:-6%;
+}
+
+#cpu th{
+    text-align: center;
+    background-color: rgb(255, 196, 45);
+    width: auto;
+    color: firebrick;
+}
+
+#cpu td{
+    width: auto;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #E66C2C;
+}
+
+/* Processes Monitoring*/
+#monitor{
+    border: 2px solid red;
+    width:350px;
+    border-radius: 5px;
+    table-layout: auto;
+    margin-top:-6%;
+}
+#monitor th{
+    text-align: center;
+    color: firebrick;
+    background-color:rgb(255, 196, 45);
+    width: auto;
+}
+#monitor td{
+    width: auto;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #E66C2C;
+}
+
+#readyQueue{
+    border: 4px solid #201477;
+    width:350px;
+    border-radius: 10px;
+    table-layout: auto;
+    margin-top:-6%;
+}
+
+/*Ready Queue*/
+
+#processesDiv{
+    overflow: scroll;
+    float: left;
+    visibility: hidden;
+    border: 2px solid red;
+    border-radius: 5px;
+    max-height: 300px;
+}
+#displayReady{
+    border-radius: 5px;
+    table-layout: auto;
+    border: 2px solid red;
+}
+#displayReady th{
+    text-align: center;
+    color: firebrick;
+    /*background-color: #FFD801;*/
+    background-color: rgb(255, 196, 45);
+    width: auto;
+}
+
+#displayReady td{
+    width: auto;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+
+#readyQueue th{
+    text-align: center;
+    color: firebrick;
+    background-color: #FFD801;
+    width: auto;
+}
+
+#readyQueue td{
+    width: auto;
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #E66C2C;
+}
+
+/* File System */
+#fileSystemDiv{
+    float:right;
+    border: 2px solid red;
+    border-radius: 5px;
+    visibility: hidden;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+ #dirDataTable{
+    border-radius: 10px;
+    table-layout: auto;
+}
+
+ #dirDataTable th{
+    text-align: center;
+    color: firebrick;
+    width: auto;
+    border-radius: 5px;
+    background-color: rgb(255, 196, 45);
+ }
+
+#dirDataTable tr:nth-child(odd) {
+    background-color: rgb(255, 196, 45);
+    /*FFD801*/
+}
+#dirDataTable tr:nth-child(even) {
+    background-color:#E66C2C;
+    /*E66C2C*/
+}
+
+#dirDataTable td{
+    width: auto;
+    text-align: center;
+    border-radius: 5px;
+    /*color: #ffffff;*/
+    /*background-color: #E66C2C;*/
+    padding:5px;
+    /*border: 2px solid;*/
+}
